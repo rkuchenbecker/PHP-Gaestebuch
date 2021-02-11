@@ -10,8 +10,11 @@
     <h1>Gästebuch</h1>
     <section class="eintraege">
         <?php
+        $pdo = new PDO('mysql:host=localhost;dbname=gaestebuch', 'root');
         $pfadDatei = "Einträge.csv";
         if(count($_POST) > 0) {
+            $statement = $pdo->prepare("INSERT INTO einträge (username, email, eintrag) VALUES (?, ?, ?");
+            $statement->execute(array($_POST['name'], $_POST['email'], $_POST['nachricht']));
             $_POST["nachricht"] = str_replace(";", ",", $_POST['nachricht']);
             $daten = $_POST;
             array_push($daten, time());
